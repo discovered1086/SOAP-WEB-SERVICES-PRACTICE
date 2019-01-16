@@ -105,7 +105,7 @@ public class MySchemaValidationInterceptor extends AbstractSoapInterceptor {
 
 				System.out.println(xmlString);
 
-				String newString = xmlString.substring(xmlString.indexOf("<" + localPart + ">"));
+				String newString = xmlString.substring(xmlString.indexOf("<" + localPart));
 
 				System.out.println(newString);
 
