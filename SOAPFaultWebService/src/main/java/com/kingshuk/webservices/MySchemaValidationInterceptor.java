@@ -1,6 +1,5 @@
 package com.kingshuk.webservices;
 
-import java.awt.geom.CubicCurve2D;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
@@ -14,10 +13,9 @@ import org.apache.cxf.binding.soap.SoapMessage;
 import org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.io.CachedOutputStream;
-import org.apache.cxf.message.Exchange;
+import org.apache.cxf.message.MessageImpl;
 import org.apache.cxf.phase.Phase;
 import org.apache.cxf.service.model.BindingMessageInfo;
-import org.apache.cxf.service.model.BindingOperationInfo;
 
 import com.kingshuk.webservices.errorresponses.EmployeeResponse;
 
@@ -44,6 +42,10 @@ public class MySchemaValidationInterceptor extends AbstractSoapInterceptor {
 
         message.getInterceptorChain().doIntercept(message);
         
+        //org.apache.cxf.message.Message.RESPONSE_CODE
+        
+        message.put(MessageImpl.RESPONSE_CODE, 200);
+        
         try {
 			cs.flush();
 			
@@ -62,9 +64,12 @@ public class MySchemaValidationInterceptor extends AbstractSoapInterceptor {
             IOUtils.copy(replaceInStream, os);
             replaceInStream.close();
             IOUtils.closeQuietly(replaceInStream);
+            
+           
 
             os.flush();
             message.setContent(OutputStream.class, os);
+            
 
             IOUtils.closeQuietly(os);
 		} catch (Exception e) {
