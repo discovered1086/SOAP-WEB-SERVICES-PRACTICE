@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://webservices.kingshuk.com/types"
+	xmlns:schemaTypes="http://webservices.kingshuk.com/types"
+	elementFormDefault="qualified">
+
+	<!-- First let's define the domain object -->
+	<xsd:complexType name="Employee">
+		<xsd:sequence>
+			<xsd:element name="employeeId" type="xsd:int" />
+			<xsd:element name="employeeName" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+	<!-- Then let's define the types of the method parameters. Not the actual 
+		parameters but their types -->
+	<xsd:complexType name="employeeRequest">
+		<xsd:sequence>
+			<xsd:element name="requestForEmployee" type="xsd:int" />
+			<xsd:element name="excludeKingshuk" type="xsd:boolean" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="employeeResponse">
+		<xsd:sequence>
+			<xsd:element name="responseForEmployee"
+				type="schemaTypes:Employee" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="schemaValidationExceptionType">
+		<xsd:sequence>
+			<xsd:element name="reasonCode"
+				type="xsd:int" />
+			<xsd:element name="reasonText" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="schemaValidationException"  type="schemaTypes:schemaValidationExceptionType"/>
+
+	<xsd:element name="theRequest"
+		type="schemaTypes:employeeRequest" />
+
+	<xsd:element name="employeeResponse"
+		type="schemaTypes:employeeResponse" />
+</schema>

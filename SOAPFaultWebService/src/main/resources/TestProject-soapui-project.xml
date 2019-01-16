@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="294638ed-cea7-4ad1-9311-bfb45a917b7a" activeEnvironment="Default" name="TestProject" resourceRoot="${projectDir}" soapui-version="5.4.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="21345ec9-5a4f-44d3-bf1d-225e50cf230d" wsaVersion="NONE" name="SOAPFaultwebserviceSOAPBinding" type="wsdl" bindingName="{http://webservices.kingshuk.com}SOAPFaultwebserviceSOAPBinding" soapVersion="1_1" anonymous="optional" definition="SOAPFaultWebService.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/MYWORK/SOAPFaultWebService/src/main/resources/SOAPFaultWebService.wsdl"><con:part><con:url>file:/C:/MYWORK/SOAPFaultWebService/src/main/resources/SOAPFaultWebService.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="SOAPFaultWebService" targetNamespace="http://webservices.kingshuk.com" xmlns:myType="http://webservices.kingshuk.com" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:schemaTypes="http://webservices.kingshuk.com/types">
+  <wsdl:import location="MyWebService.xsd" namespace="http://webservices.kingshuk.com/types"/>
+  <!--Now it's time to define the method parameters themselves-->
+  <wsdl:message name="employeeRequestMessage">
+    <wsdl:part element="schemaTypes:theRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="employeeResponseMessage">
+    <wsdl:part element="schemaTypes:employeeResponse" name="parameters"/>
+  </wsdl:message>
+  <!--Below is the web service end point interface name and the java method 
+		that performs the task-->
+  <wsdl:portType name="getEmployeePortType">
+    <wsdl:operation name="getEmployeeOperation">
+      <wsdl:input message="myType:employeeRequestMessage"/>
+      <wsdl:output message="myType:employeeResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SOAPFaultwebserviceSOAPBinding" type="myType:getEmployeePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getEmployeeOperation">
+      <soap:operation soapAction="getEmployeeAction"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SOAPFaultWebService">
+    <wsdl:port binding="myType:SOAPFaultwebserviceSOAPBinding" name="SOAPFaultwebserviceOAP">
+      <soap:address location="http://localhost:8080/SOAPFaultWebService/services/soapFaultWebService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:\C:\MYWORK\SOAPFaultWebService\src\main\resources\MyWebService.xsd</con:url><con:content><![CDATA[<schema targetNamespace="http://webservices.kingshuk.com/types" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:schemaTypes="http://webservices.kingshuk.com/types">
+  <!--First let's define the domain object-->
+  <xsd:complexType name="Employee">
+    <xsd:sequence>
+      <xsd:element name="employeeId" type="xsd:int"/>
+      <xsd:element name="employeeName" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!--Then let's define the types of the method parameters. Not the actual 
+		parameters but their types-->
+  <xsd:complexType name="employeeRequest">
+    <xsd:sequence>
+      <xsd:element name="requestForEmployee" type="xsd:int"/>
+      <xsd:element name="excludeKingshuk" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="employeeResponse">
+    <xsd:sequence>
+      <xsd:element name="responseForEmployee" type="schemaTypes:Employee"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="theRequest" type="schemaTypes:employeeRequest"/>
+  <xsd:element name="employeeResponse" type="schemaTypes:employeeResponse"/>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/SOAPFaultWebService/services/soapFaultWebService</con:endpoint></con:endpoints><con:operation id="4c437aa1-8603-4a57-82ca-db42bffec1be" isOneWay="false" action="getEmployeeAction" name="getEmployeeOperation" bindingOperationName="getEmployeeOperation" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="289c5c2d-ea7c-4c25-8154-a05d8fa1fca1" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8081/SOAPFaultWebService/services/soapFaultWebService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:typ="http://webservices.kingshuk.com/types">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <typ:theRequest>\r
+         <typ:requestForEmployee>jfdhngkdf</typ:requestForEmployee>\r
+         <typ:excludeKingshuk>true</typ:excludeKingshuk>\r
+      </typ:theRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="getEmployeeAction"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
