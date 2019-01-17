@@ -6,12 +6,13 @@ import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.phase.Phase;
 
 import com.kingshuk.webservices.errorresponses.InterceptorErrorresponseBuilder;
+import com.kingshuk.webservices.util.BeanUtil;
 
 
 public class MySchemaValidationInterceptor extends AbstractSoapInterceptor {
 	
 	
-	private static final InterceptorErrorresponseBuilder errorresponseBuilder = new InterceptorErrorresponseBuilder();
+	
 
 	public MySchemaValidationInterceptor() {
 		super(Phase.PRE_STREAM);
@@ -27,7 +28,7 @@ public class MySchemaValidationInterceptor extends AbstractSoapInterceptor {
         
         
         if(isOutbound) {
-        	errorresponseBuilder.getCustomErrorResponse(message);
+        	BeanUtil.getSpringBean(InterceptorErrorresponseBuilder.class).getCustomErrorResponse(message);
        }
 		
 	}

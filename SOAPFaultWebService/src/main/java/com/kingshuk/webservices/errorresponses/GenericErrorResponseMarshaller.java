@@ -20,6 +20,7 @@ public String getXMLMessage(String localPartName) {
 		
 		if("employeeResponse".equals(localPartName)) {
 			
+			class1 = (Class<T>) EmployeeErrorResponse.class;
 			genericErrorResponseCreator =() ->{
 				EmployeeErrorResponse response = new EmployeeErrorResponse();
 
