@@ -7,10 +7,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name="employeeResponse")
-public class EmployeeResponse {
+public class PreEndpointErrorResponses {
 	
 	@XmlElement
 	private String errorCode;
@@ -19,17 +17,12 @@ public class EmployeeResponse {
 	private String errorMessage;
 	
 	@XmlAttribute(name="xmlns")
-	private String nameSpace="http://webservices.kingshuk.com/types";
+	private final String nameSpace="http://webservices.kingshuk.com/types";
 	
 	
 
 	public String getNameSpace() {
 		return nameSpace;
-	}
-
-
-	public void setNameSpace(String nameSpace) {
-		this.nameSpace = nameSpace;
 	}
 
 
