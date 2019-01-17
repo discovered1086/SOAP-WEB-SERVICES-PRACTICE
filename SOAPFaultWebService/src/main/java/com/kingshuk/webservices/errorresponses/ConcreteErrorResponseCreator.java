@@ -1,17 +1,18 @@
 package com.kingshuk.webservices.errorresponses;
 
-import java.io.StringWriter;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-
 import org.apache.cxf.binding.soap.SoapMessage;
 import org.apache.cxf.service.model.BindingMessageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ConcreteErrorResponseCreator {
 	
-	public static String changeMessage(SoapMessage message, String currentEnvelope)
+
+	@Autowired
+	private GenericErrorResponseMarshaller<PreEndpointErrorResponses> genericErrorResponseMarshaller;
+	
+	public String changeMessage(SoapMessage message, String currentEnvelope)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 
 		BindingMessageInfo output = message.getExchange().getBindingOperationInfo().getOutput();
@@ -27,33 +28,14 @@ public class ConcreteErrorResponseCreator {
 		return buildFinalMessage;
 	}
 	
-	private static String buildFinalMessage(String localPart, String currentEnvelope) {
+	private String buildFinalMessage(String localPart, String currentEnvelope) {
 		String finalMessage ="" ;
 		
-		if (localPart.contains("employeeResponse")) {
-
-			//EmployeeErrorResponseCrator creator =  new EmployeeErrorResponseCrator();
-			
-			GenericErrorResponseCreator<EmployeeErrorResponse> genericErrorResponseCreator
-			=() ->{
-				EmployeeErrorResponse response = new EmployeeErrorResponse();
-
-				response.setErrorCode("50589");
-				response.setErrorMessage("A schema Validation error occured");
-				return response;
-			};
-			
 			try {
-				JAXBContext context = JAXBContext.newInstance(EmployeeErrorResponse.class);
-
-				Marshaller marshaller = context.createMarshaller();
-
-				marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-				StringWriter sw = new StringWriter();
-				marshaller.marshal(genericErrorResponseCreator.getErrorResponse(), sw);
-				String xmlString = sw.toString();
-
+				
+				String xmlString = genericErrorResponseMarshaller.getXMLMessage(localPart);
+				
+				
 				System.out.println(xmlString);
 
 				String newString = xmlString.substring(xmlString.indexOf("<" + localPart));
@@ -68,12 +50,10 @@ public class ConcreteErrorResponseCreator {
 
 				System.out.println(soapBody);
 
-			} catch (JAXBException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-		}
 		
 		return finalMessage;
 	}

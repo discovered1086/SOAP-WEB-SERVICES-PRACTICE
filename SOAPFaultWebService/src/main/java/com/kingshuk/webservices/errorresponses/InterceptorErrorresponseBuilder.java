@@ -7,9 +7,14 @@ import org.apache.commons.io.IOUtils;
 import org.apache.cxf.binding.soap.SoapMessage;
 import org.apache.cxf.io.CachedOutputStream;
 import org.apache.cxf.message.MessageImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class InterceptorErrorresponseBuilder {
+	
+	@Autowired
+	private ConcreteErrorResponseCreator errorResponseCreator;
 	
 	public void getCustomErrorResponse(SoapMessage message) {
 OutputStream os = message.getContent(OutputStream.class);
@@ -34,7 +39,7 @@ OutputStream os = message.getContent(OutputStream.class);
 			
 			System.out.println(currentEnvelope);
 			
-			String modifiedEnvelopeString= ConcreteErrorResponseCreator.changeMessage(message,currentEnvelope);
+			String modifiedEnvelopeString= errorResponseCreator.changeMessage(message,currentEnvelope);
 			
 			InputStream replaceInStream = IOUtils.toInputStream(modifiedEnvelopeString, "UTF-8");
 
