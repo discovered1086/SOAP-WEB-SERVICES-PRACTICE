@@ -8,6 +8,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name="employeeResponse")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name="employeeResponse")
-public class EmployeeErrorResponse extends PreEndpointErrorResponses {
+public class EmployeeResponse extends PreEndpointErrorResponses {
 
 }

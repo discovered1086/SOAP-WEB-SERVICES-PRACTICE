@@ -10,7 +10,7 @@ public class ConcreteErrorResponseCreator {
 	
 
 	@Autowired
-	private GenericErrorResponseMarshaller<PreEndpointErrorResponses> genericErrorResponseMarshaller;
+	private GenericErrorResponseMarshaller genericErrorResponseMarshaller;
 	
 	public String changeMessage(SoapMessage message, String currentEnvelope)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -21,19 +21,19 @@ public class ConcreteErrorResponseCreator {
 
 		String outputClassName = output.getMessageParts().get(0).getTypeClass().getName();
 
-		String buildFinalMessage = buildFinalMessage(localPart, currentEnvelope);
+		String buildFinalMessage = buildFinalMessage(localPart, currentEnvelope, outputClassName);
 
 		System.out.println("The response class name is " + outputClassName);
 
 		return buildFinalMessage;
 	}
 	
-	private String buildFinalMessage(String localPart, String currentEnvelope) {
+	private String buildFinalMessage(String localPart, String currentEnvelope, String outputClassName) {
 		String finalMessage ="" ;
 		
 			try {
 				
-				String xmlString = genericErrorResponseMarshaller.getXMLMessage(localPart);
+				String xmlString = genericErrorResponseMarshaller.getXMLMessage(outputClassName);
 				
 				
 				System.out.println(xmlString);
