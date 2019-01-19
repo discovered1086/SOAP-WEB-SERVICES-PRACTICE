@@ -65,7 +65,6 @@ public class SOAPValidationHandler implements SOAPHandler<SOAPMessageContext> {
 
 			
 		} catch (SOAPException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		return false;
@@ -78,7 +77,6 @@ public class SOAPValidationHandler implements SOAPHandler<SOAPMessageContext> {
 
 	@Override
 	public Set<QName> getHeaders() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

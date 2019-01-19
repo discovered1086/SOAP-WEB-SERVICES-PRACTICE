@@ -27,15 +27,6 @@ public class EmployeeNewServiceImpl implements GetEmployeePortType {
 		}catch(HttpStatusCodeException ex) {
 			throw ex;
 		}
-		/*if(employee!=null) {
-			EmployeeResponse response = new EmployeeResponse();
-
-			response.setResponseForEmployee(employee);
-
-			return response;
-		}else {
-			throw new EmployeeNotFoundException();
-		}*/
 		EmployeeResponse response = new EmployeeResponse();
 
 		response.setResponseForEmployee(employee);

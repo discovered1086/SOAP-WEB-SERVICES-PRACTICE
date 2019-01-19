@@ -1,6 +1,8 @@
 
 package com.kingshuk.webservices.types;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -32,9 +34,14 @@ import javax.xml.bind.annotation.XmlType;
     "reasonCode",
     "reasonText"
 })
-public class SchemaValidationExceptionType {
+public class SchemaValidationExceptionType implements Serializable{
 
-    protected int reasonCode;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8042049780449520609L;
+	
+	protected int reasonCode;
     @XmlElement(required = true)
     protected String reasonText;
 
