@@ -1,9 +1,7 @@
 package com.kingshuk.webservices.errorresponses;
 
 import java.io.StringWriter;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
+import java.util.Optional;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -21,9 +19,7 @@ public class GenericErrorResponseMarshaller {
 	
 
 	@SuppressWarnings("unchecked")
-	public <T> String getXMLMessage(String className) {
-		
-		
+	public <T> Optional<String> getXMLMessage(String className) {
 		
 		PreEndpointErrorResponses newInstance = null;
 		
@@ -39,32 +35,14 @@ public class GenericErrorResponseMarshaller {
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
-		
-		
-
-		/*GenericErrorResponseCreator<Type> genericErrorResponseCreator = null;
-
-		genericErrorResponseCreator = () -> {
-
-			T newInstance = null;
-
-			try {
-				newInstance = class1.newInstance();
-			} catch (InstantiationException | IllegalAccessException e) {
-				e.printStackTrace();
-			}
-
-			newInstance.setErrorCode("50589");
-			newInstance.setErrorMessage("A schema Validation error occured");
-			return newInstance;
-		};*/
 
 		return getParsedMessage(newInstance);
 	}
 
-	private <T extends PreEndpointErrorResponses> String getParsedMessage(T errorResponseObject) {
+	private <T extends PreEndpointErrorResponses> Optional<String> getParsedMessage(T errorResponseObject) {
+		
+		Optional<String> updatedMessage =  Optional.empty();
 
-		String updatedMessage = "";
 		JAXBContext context;
 		try {
 
@@ -75,8 +53,10 @@ public class GenericErrorResponseMarshaller {
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
 			StringWriter sw = new StringWriter();
+			
 			marshaller.marshal(errorResponseObject, sw);
-			updatedMessage = sw.toString();
+			
+			updatedMessage = Optional.ofNullable(sw.toString());
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
