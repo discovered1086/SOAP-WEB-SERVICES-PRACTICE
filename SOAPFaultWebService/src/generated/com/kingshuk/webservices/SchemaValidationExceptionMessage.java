@@ -1,4 +1,3 @@
-
 package com.kingshuk.webservices;
 
 import javax.xml.ws.WebFault;

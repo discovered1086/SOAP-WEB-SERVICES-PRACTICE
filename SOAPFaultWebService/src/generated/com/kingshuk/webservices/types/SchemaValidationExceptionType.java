@@ -1,4 +1,3 @@
-
 package com.kingshuk.webservices.types;
 
 import javax.xml.bind.annotation.XmlAccessType;

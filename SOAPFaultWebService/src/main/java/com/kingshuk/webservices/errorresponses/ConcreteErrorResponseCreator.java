@@ -54,8 +54,12 @@ public class ConcreteErrorResponseCreator {
 
 				System.out.println(soapBody);
 
+
 			} else {
 				finalMessage = Optional.ofNullable(currentEnvelope);
+
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 
 		} catch (Exception e) {
