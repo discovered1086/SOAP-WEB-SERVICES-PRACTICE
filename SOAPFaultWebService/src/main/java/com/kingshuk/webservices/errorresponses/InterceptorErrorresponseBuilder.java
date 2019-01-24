@@ -39,7 +39,8 @@ OutputStream os = message.getContent(OutputStream.class);
 			
 			System.out.println(currentEnvelope);
 			
-			String modifiedEnvelopeString= errorResponseCreator.changeMessage(message,currentEnvelope);
+			String modifiedEnvelopeString= errorResponseCreator.changeMessage(message,currentEnvelope)
+											.orElse(currentEnvelope);
 			
 			InputStream replaceInStream = IOUtils.toInputStream(modifiedEnvelopeString, "UTF-8");
 

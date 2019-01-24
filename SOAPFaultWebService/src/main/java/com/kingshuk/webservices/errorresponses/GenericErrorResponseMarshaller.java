@@ -1,9 +1,7 @@
 package com.kingshuk.webservices.errorresponses;
 
 import java.io.StringWriter;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
+import java.util.Optional;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -22,7 +20,8 @@ public class GenericErrorResponseMarshaller {
 	private static Logger logger = Logger.getLogger(GenericErrorResponseMarshaller.class);
 
 	@SuppressWarnings("unchecked")
-	public <T> String getXMLMessage(String className) {
+
+	public <T> Optional<String> getXMLMessage(String className) {
 
 		PreEndpointErrorResponses newInstance = null;
 
@@ -40,18 +39,14 @@ public class GenericErrorResponseMarshaller {
 			logger.log(null, "context", "error occurred while performing operation", e);
 		}
 
-		String response = null;
-		
-		if (newInstance != null) {
-			response =  getParsedMessage(newInstance);
-		}
-		
-		return response;
+
+		return getParsedMessage(newInstance);
 	}
 
-	private <T extends PreEndpointErrorResponses> String getParsedMessage(T errorResponseObject) {
+	private <T extends PreEndpointErrorResponses> Optional<String> getParsedMessage(T errorResponseObject) {
+		
+		Optional<String> updatedMessage =  Optional.empty();
 
-		String updatedMessage = "";
 		JAXBContext context;
 		try {
 
@@ -62,8 +57,10 @@ public class GenericErrorResponseMarshaller {
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
 			StringWriter sw = new StringWriter();
+			
 			marshaller.marshal(errorResponseObject, sw);
-			updatedMessage = sw.toString();
+			
+			updatedMessage = Optional.ofNullable(sw.toString());
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
