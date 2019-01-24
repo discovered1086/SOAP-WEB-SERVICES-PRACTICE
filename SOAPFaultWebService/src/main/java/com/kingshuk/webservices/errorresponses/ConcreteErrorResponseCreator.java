@@ -21,7 +21,7 @@ public class ConcreteErrorResponseCreator {
 		String localPart = output.getMessageParts().get(0).getTypeQName().getLocalPart();
 
 		String outputClassName = output.getMessageParts().get(0).getTypeClass().getName();
-		
+
 		System.out.println("The response class name is " + outputClassName);
 
 		return buildFinalMessage(localPart, currentEnvelope, outputClassName);
@@ -57,18 +57,13 @@ public class ConcreteErrorResponseCreator {
 
 			} else {
 				finalMessage = Optional.ofNullable(currentEnvelope);
-
+			}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			finalMessage = Optional.empty();
-			
-		}
-
-		return finalMessage;
-	}
+	return finalMessage;
+}
 
 }
