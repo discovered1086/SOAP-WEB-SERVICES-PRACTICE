@@ -8,10 +8,22 @@
 	<!-- First let's define the domain object -->
 	<xsd:complexType name="Employee">
 		<xsd:sequence>
-			<xsd:element name="employeeId" type="xsd:int" />
-			<xsd:element name="employeeName" type="xsd:string" />
+			<xsd:element name="employeeId" type="schemaTypes:employeeId" />
+			<xsd:element name="employeeName" type="schemaTypes:employeeName" />
 		</xsd:sequence>
 	</xsd:complexType>
+	
+	<xsd:simpleType name="employeeId">
+		<xsd:restriction base="int">
+			<xsd:totalDigits value="2" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="employeeName">
+		<xsd:restriction base="string">
+			<xsd:maxLength value="10" />
+		</xsd:restriction>
+	</xsd:simpleType>
 
 
 	<!-- Then let's define the types of the method parameters. Not the actual 
