@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="StudentManagementService">
+    <output-path>$PROJECT_DIR$/out/artifacts/StudentManagementService</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="StudentManagementService/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="StudentManagementService" />
+          <element id="module-output" name="mavenmodule" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="JAX-WS-Apache Axis" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

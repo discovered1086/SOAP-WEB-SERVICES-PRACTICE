@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="HelloWebServiceWorld:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="HelloWebServiceWorld.war">
+      <element id="artifact" artifact-name="HelloWebServiceWorld:war exploded" />
+    </root>
+  </artifact>
+</component>

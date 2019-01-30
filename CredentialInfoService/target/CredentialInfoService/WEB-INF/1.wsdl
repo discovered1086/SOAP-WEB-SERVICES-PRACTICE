@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://business.credentialservice.com/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  name="CredentialManagerService"
+                  targetNamespace="http://business.credentialservice.com/">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://business.credentialservice.com/" targetNamespace="http://business.credentialservice.com/">
+            <xsd:complexType name="deleteCredentials">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="accountId" type="ns0:GetCredentialsListOrDeleteCredentialRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="deleteCredentialsResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="deleteResult" type="ns0:DDLCredentialResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getCredentialForStorageInSession">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="credentialsListForStorage" type="ns0:GetCredentialForStorageRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getCredentialForStorageInSessionResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="singleCredentialInformation" type="ns0:GetCredentialForStorageResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getCredentialsListForView">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="searchString" type="ns0:GetCredentialsListOrDeleteCredentialRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getCredentialsListForViewResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="credentialList" type="ns0:GetCredentialsListResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="saveCredentials">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="saveCredentialRequest" type="ns0:SaveOrUpdateCredentialRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="saveCredentialsResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="saveResult" type="ns0:DDLCredentialResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="updateCredentials">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="credentials" type="ns0:SaveOrUpdateCredentialRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="updateCredentialsResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="updateResult" type="ns0:DDLCredentialResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Credentials">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="accountId" type="xsd:string"/>
+                    <xsd:element name="account" type="xsd:string"/>
+                    <xsd:element name="userId" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="passwordType" type="xsd:string"/>
+                    <xsd:element name="password" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="url" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="DDLCredentialResponse">
+                <xsd:sequence>
+                    <xsd:element name="result" type="xsd:boolean"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="GetCredentialForStorageRequest">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="credentialsList" nillable="true" type="ns0:Credentials"/>
+                    <xsd:element minOccurs="0" name="accountId" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="GetCredentialForStorageResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="credential" type="ns0:Credentials"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="GetCredentialsListOrDeleteCredentialRequest">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="searchStringOrAccountId" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="GetCredentialsListResponse">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="credentialsList" nillable="true" type="ns0:Credentials"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="SaveOrUpdateCredentialRequest">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="credential" type="ns0:Credentials"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="deleteCredentials" type="ns0:deleteCredentials"/>
+            <xsd:element name="deleteCredentialsResponse" type="ns0:deleteCredentialsResponse"/>
+            <xsd:element name="getCredentialForStorageInSession" type="ns0:getCredentialForStorageInSession"/>
+            <xsd:element name="getCredentialForStorageInSessionResponse" type="ns0:getCredentialForStorageInSessionResponse"/>
+            <xsd:element name="getCredentialsListForView" type="ns0:getCredentialsListForView"/>
+            <xsd:element name="getCredentialsListForViewResponse" type="ns0:getCredentialsListForViewResponse"/>
+            <xsd:element name="saveCredentials" type="ns0:saveCredentials"/>
+            <xsd:element name="saveCredentialsResponse" type="ns0:saveCredentialsResponse"/>
+            <xsd:element name="updateCredentials" type="ns0:updateCredentials"/>
+            <xsd:element name="updateCredentialsResponse" type="ns0:updateCredentialsResponse"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="getCredentialsListForView">
+        <wsdl:part element="tns:getCredentialsListForView" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="getCredentialsListForViewResponse">
+        <wsdl:part element="tns:getCredentialsListForViewResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="deleteCredentials">
+        <wsdl:part element="tns:deleteCredentials" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="deleteCredentialsResponse">
+        <wsdl:part element="tns:deleteCredentialsResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="updateCredentials">
+        <wsdl:part element="tns:updateCredentials" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="updateCredentialsResponse">
+        <wsdl:part element="tns:updateCredentialsResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="getCredentialForStorageInSession">
+        <wsdl:part element="tns:getCredentialForStorageInSession" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="getCredentialForStorageInSessionResponse">
+        <wsdl:part element="tns:getCredentialForStorageInSessionResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="saveCredentials">
+        <wsdl:part element="tns:saveCredentials" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="saveCredentialsResponse">
+        <wsdl:part element="tns:saveCredentialsResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:portType name="CredentialsServicePortType">
+        <wsdl:operation name="getCredentialsListForView">
+            <wsdl:input message="tns:getCredentialsListForView" name="getCredentialsListForView"/>
+            <wsdl:output message="tns:getCredentialsListForViewResponse" name="getCredentialsListForViewResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="deleteCredentials">
+            <wsdl:input message="tns:deleteCredentials" name="deleteCredentials"/>
+            <wsdl:output message="tns:deleteCredentialsResponse" name="deleteCredentialsResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="updateCredentials">
+            <wsdl:input message="tns:updateCredentials" name="updateCredentials"/>
+            <wsdl:output message="tns:updateCredentialsResponse" name="updateCredentialsResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getCredentialForStorageInSession">
+            <wsdl:input message="tns:getCredentialForStorageInSession" name="getCredentialForStorageInSession"/>
+            <wsdl:output message="tns:getCredentialForStorageInSessionResponse" name="getCredentialForStorageInSessionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="saveCredentials">
+            <wsdl:input message="tns:saveCredentials" name="saveCredentials"/>
+            <wsdl:output message="tns:saveCredentialsResponse" name="saveCredentialsResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CredentialManagerServiceSoapBinding" type="tns:CredentialsServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getCredentialsListForView">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCredentialsListForView">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCredentialsListForViewResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteCredentials">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="deleteCredentials">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="deleteCredentialsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="updateCredentials">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="updateCredentials">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateCredentialsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getCredentialForStorageInSession">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCredentialForStorageInSession">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCredentialForStorageInSessionResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="saveCredentials">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="saveCredentials">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="saveCredentialsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CredentialManagerService">
+        <wsdl:port binding="tns:CredentialManagerServiceSoapBinding" name="CredentialsServicePortTypePort">
+            <soap:address location="http://localhost:7001/CredentialInfoService/services/credentialInfoService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
