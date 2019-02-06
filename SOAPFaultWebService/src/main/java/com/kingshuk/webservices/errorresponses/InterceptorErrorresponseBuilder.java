@@ -17,7 +17,7 @@ public class InterceptorErrorresponseBuilder {
 	private ConcreteErrorResponseCreator errorResponseCreator;
 	
 	public void getCustomErrorResponse(SoapMessage message) {
-OutputStream os = message.getContent(OutputStream.class);
+		OutputStream os = message.getContent(OutputStream.class);
 		
 		CachedOutputStream cs = new CachedOutputStream();
         message.setContent(OutputStream.class, cs);
