@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class SoapFaultWebServiceApplicationTests {
 
 	@Test
-	public void contextLoads() {
+	public void test() {
 	}
 
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:student="http://kingshuk.com/schema/student.xsd"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://kingshuk.com/schema/student.xsd"
+            targetNamespace="http://kingshuk.com/schema/student.xsd"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+
+    <xsd:element name="student" type="tns:Student"/>
+
+    <xsd:complexType name="Student">
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:int"/>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="course" type="student:course"/>
+            <xsd:element name="admissionYear" type="xsd:int"/>
+            <xsd:element name="roleNumber" type="xsd:int"/>
+            <xsd:element name="email" type="xsd:string" maxOccurs="unbounded"/> <!--This makes the number of occurrences of
+            this element unbounded-->
+            <xsd:element name="address" type="student:Address"/> <!--This makes the element in the XML optional-->
+            <xsd:element name="major" type="student:Subjects"/>
+            <xsd:element name="minor" type="student:MinorSubjects" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="course">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="IT"/>
+            <xsd:enumeration value="CSE"/>
+            <xsd:enumeration value="MECH"/>
+            <xsd:enumeration value="AUE"/>
+            <xsd:enumeration value="ECE"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="Address">
+        <xsd:sequence>
+            <xsd:element name="streetAddress" type="xsd:string"/>
+            <xsd:element name="city" type="xsd:string"/>
+            <xsd:element name="state" type="xsd:string"/>
+            <xsd:element name="country" type="xsd:string"/>
+            <xsd:element name="zipCode" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Subjects">
+        <xsd:all>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="Name" type="xsd:string"/>
+        </xsd:all>
+    </xsd:complexType>
+
+    <xsd:complexType name="MinorSubjects">
+        <xsd:choice>
+            <xsd:element name="Maths" type="student:Subjects"/>
+            <xsd:element name="Automata" type="student:Subjects"/>
+            <xsd:element name="HTML" type="student:Subjects"/>
+        </xsd:choice>
+    </xsd:complexType>
+</xsd:schema>

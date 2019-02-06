@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<wsdl:definitions
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        name="projectManagementService"
+        targetNamespace="http://projectManagementService.com/Project"
+        xmlns:tns="http://projectManagementService.com/Project">
+
+
+    <!--First and foremost we need to define the WSDL types where the schema definitions
+        and the type definitions for the request and response goes-->
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://projectManagementService.com/Project"
+                    xmlns:tns="http://projectManagementService.com/Project"
+                    elementFormDefault="qualified" version="1.0">
+
+            <xsd:element name="project" type="tns:Project"/>
+
+            <xsd:complexType name="Project">
+                <xsd:sequence>
+                    <xsd:element name="projectId" type="xsd:string"/>
+                    <xsd:element name="projectLength" type="xsd:int"/>
+                    <xsd:element name="projectManager" type="tns:Member" maxOccurs="1"/>
+                    <xsd:element name="technology" type="xsd:string"/>
+                    <xsd:element name="members" type="tns:Member" minOccurs="2" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="Member">
+                <xsd:sequence>
+                    <xsd:element name="firstName" type="xsd:string"/>
+                    <xsd:element name="lastName" type="xsd:string"/>
+                    <xsd:element name="employeeId" type="xsd:string"/>
+                    <xsd:element name="emailAddress" type="tns:emailAddress"/>
+                    <xsd:element name="phoneNum" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="skillSet" type="tns:SkillSet"/>
+                    <xsd:element name="experience" type="xsd:float"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:simpleType name="SkillSet">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="Project Manager"/>
+                    <xsd:enumeration value="Scrum Master"/>
+                    <xsd:enumeration value="Developer"/>
+                    <xsd:enumeration value="UX Designer"/>
+                    <xsd:enumeration value="QA tester"/>
+                    <xsd:enumeration value="Tech Lead"/>
+                    <xsd:enumeration value="QA Lead"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <xsd:simpleType name="emailAddress">
+                <xsd:restriction base="xsd:string"/>
+            </xsd:simpleType>
+
+            
+            <xsd:complexType name="projectInfoRequest">
+                <xsd:sequence>
+                    <xsd:element name="projectId" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="projectInfoResponse">
+                <xsd:sequence>
+                    <xsd:element name="projectInfo" type="tns:Project"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!--<xsd:complexType name="ProjectInfoException">
+                <xsd:sequence>
+                    <xsd:element name="message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>-->
+
+
+            <xsd:element name="RequestForProjectInfo" type="tns:projectInfoRequest"/>
+
+            <xsd:element name="ResponseForProjectInfo" type="tns:projectInfoResponse"/>
+
+            <xsd:element name="ExceptionResponseForProjectInfo" type="soap:tFault"/>
+        </xsd:schema>
+    </wsdl:types>
+
+    <!--That wraps up the WSDL types definitions. Next important step is to come up
+    with the request and response message.These messages are analogous to the input
+    parameter and output return type to a java method -->
+    <wsdl:message name="ProjectInfoRequest">
+        <wsdl:part name="parameters" element="tns:RequestForProjectInfo"/>
+    </wsdl:message>
+
+    <wsdl:message name="ProjectInfoResponse">
+        <wsdl:part name="parameters" element="tns:ResponseForProjectInfo"/>
+    </wsdl:message>
+
+    <wsdl:message name="ProjectInfoException">
+        <wsdl:part name="fault" element="tns:ExceptionResponseForProjectInfo"/>
+    </wsdl:message>
+
+    <!--Operations part is next. Here actual actions that'll be performed by the web services are defined
+    -Operations use messages as input or output parameters and criteria
+    -Operations can also be considered as the use case or the actual action performed by the service
+    -Here at a very high level the purpose served by the service is to return some Student Details
+    -All kinds of operations performed by the service needs to be grouped into a port Type
+    -Operations are the actual methods in java code that serve the request from the clients-->
+    <wsdl:portType name="ProjectInformationService">
+        <wsdl:operation name="getProjectInfo">
+            <wsdl:input message="tns:ProjectInfoRequest" name="projectInfoInput"/>
+            <wsdl:output message="tns:ProjectInfoResponse" name="projectInfoOutput"/>
+            <wsdl:fault name="ProjectInfoException" message="tns:ProjectInfoException" />
+        </wsdl:operation>
+    </wsdl:portType>
+
+
+    <!--This wraps up the abstract portion of the WSDL. Below is what we can the physical portion of the WSDL
+    - This defines how to provide or consume a particular web service
+    -This essentially says what type of SOAP messages will go in and come out to the service-->
+    <wsdl:binding name="ProjectInfoBinding" type="tns:ProjectInformationService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="getProjectInfo">
+            <soap:operation style="document" soapAction=""/>
+            <wsdl:input name="projectInfoInput">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="projectInfoOutput">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ProjectInfoException">
+                <soap:fault name="ProjectInfoException"  use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <!--Last and final portion is the service portion which tells the consumers how to consume this service
+        - The soap address is just a placeholder. Apache CXF at runtime will update the server and port number of the
+        server where the service eventually gets deployed-->
+    <wsdl:service name="ProjectManagementService">
+        <wsdl:port name="projectManagementPort" binding="tns:ProjectInfoBinding">
+            <soap:address location="http://localhost:7001/JAXWSHandlerService/services/projectInfoService"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	   xmlns:cxf="http://cxf.apache.org/core"
+	   xsi:schemaLocation="http://cxf.apache.org/core
+	   http://cxf.apache.org/schemas/core.xsd
+	   http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://cxf.apache.org/jaxws
+	   http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<!--<jaxws:server id="studentService" address="/studentInfoService" >
+		<jaxws:serviceBean>
+            <bean class="com.student.studentinfoservice.StudentInfoServiceImpl" />
+		</jaxws:serviceBean>
+		<!-This is 2nd step of setting up the user name token profile
+		 These interceptors are like servlet filters-->
+		<!--WSS4JinInterceptor stands for Web Services Security for (4) Java-->
+		<!--<jaxws:inInterceptors>
+			<bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor" >
+				<constructor-arg>
+					<map>
+						<entry key="action" value="UsernameToken" />
+						<entry key="passwordType" value="PasswordText" />
+						<entry key="passwordCallbackRef" value-ref="passwordCallBackClass" />
+					</map>
+				</constructor-arg>
+			</bean>
+
+		</jaxws:inInterceptors>
+	</jaxws:server>-->
+
+	<bean id="passwordCallBackClass" class="com.student.studentinfout.UserNamePasswordCallback" />
+
+
+	<jaxws:endpoint id="studentService" address="/studentInfoService" wsdlLocation="WEB-INF/wsdl/StudentsInfo.wsdl"
+					implementor="com.student.studentinfoservice.StudentInfoServiceImpl"
+					serviceName="studentInfoService:StudentInfoServices"
+                    xmlns:studentInfoService="http://studentInfoService.com/Student">
+	<!--This is 2nd step of setting up the user name token profile
+	These interceptors are like servlet filters-->
+	<!--WSS4JinInterceptor stands for Web Services Security for (4) Java-->
+	<jaxws:inInterceptors>
+        <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor" >
+            <constructor-arg>
+                <map>
+                    <entry key="action" value="UsernameToken" />
+                    <entry key="passwordType" value="PasswordText" />
+                    <entry key="passwordCallbackRef" value-ref="passwordCallBackClass" />
+                </map>
+            </constructor-arg>
+        </bean>
+
+    </jaxws:inInterceptors>
+</jaxws:endpoint>
+
+<!--This enables many CXF features. Here just the logging feature is being enabled-->
+	<cxf:bus>
+		<cxf:features>
+			<cxf:logging/>
+		</cxf:features>
+	</cxf:bus>
+</beans>

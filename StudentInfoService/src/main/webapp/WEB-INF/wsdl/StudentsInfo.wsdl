@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  name="studentInfoService"
+                  targetNamespace="http://studentInfoService.com/Student"
+                  xmlns:tns="http://studentInfoService.com/Student">
+    <!--First and foremost we need to define the WSDL types where the schema definitions
+    and the type definitions for the request and response goes-->
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://studentInfoService.com/Student"
+                    xmlns:tns="http://studentInfoService.com/Student"
+                    elementFormDefault="qualified" version="1.0">
+
+            <xsd:element name="student" type="tns:Student"/>
+
+            <xsd:complexType name="Student">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int"/>
+                    <xsd:element name="name" type="xsd:string"/>
+                    <xsd:element name="admissionYear" type="xsd:int"/>
+                    <xsd:element name="roleNumber" type="xsd:int"/>
+                    <xsd:element name="email" type="xsd:string" maxOccurs="unbounded"/> <!--This makes the number of occurrences of
+            this element unbounded-->
+                    <xsd:element name="course" type="tns:course"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:simpleType name="course">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="IT"/>
+                    <xsd:enumeration value="CSE"/>
+                    <xsd:enumeration value="MECH"/>
+                    <xsd:enumeration value="AUE"/>
+                    <xsd:enumeration value="ECE"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+
+
+            <xsd:complexType name="StudentRequest">
+                <xsd:sequence>
+                    <xsd:element  name="studentId" type="xsd:integer"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="StudentResponse">
+                <xsd:sequence>
+                    <xsd:element  name="student" type="tns:Student"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:element name="RequestForStudentInfo" type="tns:StudentRequest"/>
+
+            <xsd:element name="ResponseForStudentInfo" type="tns:StudentResponse"/>
+
+        </xsd:schema>
+
+    </wsdl:types>
+
+    <!--That wraps up the WSDL types definitions. Next important step is to come up with the request and response message
+    These messages are analogous to the input parameter and output return type to a java method -->
+    <wsdl:message name="StudentDetailsRequest">
+        <wsdl:part name="parameters" element="tns:RequestForStudentInfo"/>
+    </wsdl:message>
+
+    <wsdl:message name="StudentDetailsResponse">
+        <wsdl:part name="parameters" element="tns:ResponseForStudentInfo"/>
+    </wsdl:message>
+
+    <!--Operations part is next. Here actual actions that'll be performed by the web services are defined
+    -Operations use messages as input or output parameters and criteria
+    -Operations can also be considered as the use case or the actual action performed by the service
+    -Here at a very high level the purpose served by the service is to return some Student Details
+    -All kinds of operations performed by the service needs to be grouped into a port Type
+    -Operations are the actual methods in java code that serve the request from the clients-->
+    <wsdl:portType name="StudentInfoService">
+        <wsdl:operation name="getStudentDetails">
+            <wsdl:input message="tns:StudentDetailsRequest" name="getStudentDetailsReq"/>
+            <wsdl:output message="tns:StudentDetailsResponse" name="getStudentDetailsRes"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!--This wraps up the abstract portion of the WSDL. Below is what we call the physical portion of the WSDL
+    - This defines how to provide or consume a particular web service
+    -This essentially says what type of SOAP messages will go in and come out to the service-->
+    <wsdl:binding name="getStudentDetailsBinding" type="tns:StudentInfoService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="getStudentDetails">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getStudentDetailsReq">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getStudentDetailsRes">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <!--Last and final portion is the service portion which tells the consumers how to consume this service
+    - The soap address is just a placeholder. Apache CXF at runtime will update the server and port number of the
+    server where the service eventually gets deployed-->
+    <wsdl:service name="StudentInfoServices" >
+        <wsdl:port name="studentInfoServicePort" binding="tns:getStudentDetailsBinding" >
+            <soap:address location="http://localhost:7001/StudentInfoService/services/studentInfoService" />
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

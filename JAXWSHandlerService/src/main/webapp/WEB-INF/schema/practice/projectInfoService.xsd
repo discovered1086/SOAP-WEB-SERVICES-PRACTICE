@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified"
+        targetNamespace="http://projectManagementService.com/Project/resource"
+        xmlns:tns="http://projectManagementService.com/Project/resource">
+
+    <element name="project" type="tns:Project"/>
+
+    <complexType name="Project">
+        <sequence>
+            <element name="projectId" type="string"/>
+            <element name="projectLength" type="int"/>
+            <element name="projectManager" type="tns:Member" maxOccurs="1"/>
+            <element name="technology" type="string"/>
+            <element name="members" type="tns:Member" maxOccurs="unbounded" minOccurs="2"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="Member">
+        <sequence>
+            <element name="firstName" type="string"/>
+            <element name="lastName" type="string"/>
+            <element name="employeeId" type="string"/>
+            <element name="emailAddress" type="tns:emailAddress"/>
+            <element name="phoneNum" type="string" minOccurs="0"/>
+            <element name="skillSet" type="tns:SkillSet"/>
+            <element name="experience" type="float" />
+        </sequence>
+    </complexType>
+
+    <simpleType name="SkillSet">
+        <restriction base="string">
+            <enumeration value="Project Manager"/>
+            <enumeration value="Scrum Master"/>
+            <enumeration value="Developer"/>
+            <enumeration value="UX Designer"/>
+            <enumeration value="QA tester"/>
+            <enumeration value="Tech Lead"/>
+            <enumeration value="QA Lead"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="emailAddress">
+        <restriction base="string"/>
+    </simpleType>
+</schema>

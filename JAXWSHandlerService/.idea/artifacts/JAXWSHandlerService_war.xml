@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="JAXWSHandlerService:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="JAXWSHandlerService.war">
+      <element id="artifact" artifact-name="JAXWSHandlerService:war exploded" />
+    </root>
+  </artifact>
+</component>

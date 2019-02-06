@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://kingshuk.com/schema/student"
+                  xmlns:studentSchema="http://kingshuk.com/schema/student.xsd">
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://kingshuk.com/schema/student" elementFormDefault="qualified" >
+            <xsd:import namespace="http://kingshuk.com/schema/student.xsd" schemaLocation="student.xsd" />
+            <xsd:element name="getStudentDetails" >
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="studentCode" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="getStudentDetailsResponse" >
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="studentProfile" type="studentSchema:Student" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+        </xsd:schema>
+    </wsdl:types>
+    
+    <wsdl:message name="getStudentDetailsRequest" >
+        <wsdl:part name="params" element="getStudentDetails" />
+    </wsdl:message>
+
+    <wsdl:message name="getStudentDetailsResponse" >
+        <wsdl:part name="result" element="getStudentDetailsResponse" />
+    </wsdl:message>
+
+    <wsdl:portType name="studentPortType" >
+        <wsdl:operation name="getStudentData">
+            <wsdl:input message="getStudentDetailsRequest" />
+            <wsdl:output message="getStudentDetailsResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="studentProfileBinding" type="studentPortType" >
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="getStudentData" >
+            <soap:operation soapAction="urn:getStudentData" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="studentProfileLoadService" >
+        <wsdl:port name="studentProfilePort" binding="studentProfileBinding" >
+            <soap:address location="http://localhost/services/studentProfileLoadService" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
