@@ -19,6 +19,8 @@ public class ConcreteErrorResponseCreator {
 		BindingMessageInfo output = message.getExchange().getBindingOperationInfo().getOutput();
 
 		String localPart = output.getMessageParts().get(0).getTypeQName().getLocalPart();
+		
+		System.out.println("The local part name is " + localPart);
 
 		String outputClassName = output.getMessageParts().get(0).getTypeClass().getName();
 
@@ -42,7 +44,7 @@ public class ConcreteErrorResponseCreator {
 
 				System.out.println(xmlString);
 
-				String newString = xmlString.substring(xmlString.indexOf("<" + localPart));
+				String newString = xmlString.substring(xmlString.indexOf("<dnd:" + localPart));
 
 				System.out.println(newString);
 

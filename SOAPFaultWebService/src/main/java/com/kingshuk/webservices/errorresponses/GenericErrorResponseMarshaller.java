@@ -4,8 +4,10 @@ import java.io.StringWriter;
 import java.util.Optional;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.namespace.QName;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -58,7 +60,17 @@ public class GenericErrorResponseMarshaller {
 
 			StringWriter sw = new StringWriter();
 			
-			marshaller.marshal(errorResponseObject, sw);
+			String nodeName =  errorResponseObject.getClass().getSimpleName();
+			
+			String modifiedNodeName =  nodeName.replace(nodeName.charAt(0), Character.toLowerCase(nodeName.charAt(0)));
+			
+			QName rootName = new QName(errorResponseObject.getNameSpace(), modifiedNodeName, "dnd");
+			 @SuppressWarnings("unchecked")
+			JAXBElement<T> root = new JAXBElement<T>(rootName, (Class<T>) errorResponseObject.getClass(), errorResponseObject);
+			
+			//marshaller.marshal(errorResponseObject, sw);
+			 
+			 marshaller.marshal(root, sw);
 			
 			updatedMessage = Optional.ofNullable(sw.toString());
 		} catch (JAXBException e) {

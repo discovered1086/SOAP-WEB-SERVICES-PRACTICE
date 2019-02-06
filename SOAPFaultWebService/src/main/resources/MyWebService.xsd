@@ -13,6 +13,15 @@
 		</xsd:sequence>
 	</xsd:complexType>
 
+	<xsd:simpleType name="employeeType">
+		<xsd:annotation>
+			<xsd:documentation>This is to indicate if the employee is full time or part time</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="FULL_TIME" />
+			<xsd:enumeration value="PART_TIME" />
+		</xsd:restriction>
+	</xsd:simpleType>
 
 	<!-- Then let's define the types of the method parameters. Not the actual 
 		parameters but their types -->
@@ -20,6 +29,7 @@
 		<xsd:sequence>
 			<xsd:element name="requestForEmployee" type="xsd:int" />
 			<xsd:element name="excludeKingshuk" type="xsd:boolean" />
+			<xsd:element name="tyoeOfEmployee"   type="schemaTypes:employeeType" />
 		</xsd:sequence>
 	</xsd:complexType>
 
