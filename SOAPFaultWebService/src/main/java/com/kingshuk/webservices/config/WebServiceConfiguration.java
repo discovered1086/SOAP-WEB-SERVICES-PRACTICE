@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import com.kingshuk.webservices.EmployeeServiceImpl;
 import com.kingshuk.webservices.MySchemaValidationInterceptor;
 
+
 @Configuration
 public class WebServiceConfiguration {
 

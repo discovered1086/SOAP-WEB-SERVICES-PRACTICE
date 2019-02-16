@@ -2,6 +2,8 @@ package com.kingshuk.webservices.errorresponses;
 
 import java.util.Optional;
 
+import javax.xml.soap.MessageFactory;
+
 import org.apache.cxf.binding.soap.SoapMessage;
 import org.apache.cxf.service.model.BindingMessageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +21,15 @@ public class ConcreteErrorResponseCreator {
 		BindingMessageInfo output = message.getExchange().getBindingOperationInfo().getOutput();
 
 		String localPart = output.getMessageParts().get(0).getTypeQName().getLocalPart();
+		
+		System.out.println("The local part name is " + localPart);
 
 		String outputClassName = output.getMessageParts().get(0).getTypeClass().getName();
 
 		System.out.println("The response class name is " + outputClassName);
 
 		return buildFinalMessage(localPart, currentEnvelope, outputClassName);
-
+		
 	}
 
 	private Optional<String> buildFinalMessage(String localPart, String currentEnvelope, String outputClassName) {
@@ -42,7 +46,7 @@ public class ConcreteErrorResponseCreator {
 
 				System.out.println(xmlString);
 
-				String newString = xmlString.substring(xmlString.indexOf("<" + localPart));
+				String newString = xmlString.substring(xmlString.indexOf("<dnd:" + localPart));
 
 				System.out.println(newString);
 
